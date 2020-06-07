@@ -1,4 +1,5 @@
 import tkinter as tk
+import pyperclip
 from bot import Bot
 
 BLM_VIDEO = 'https://www.youtube.com/watch?v=bCgLa25fDHM'
@@ -56,6 +57,60 @@ class Application(tk.Frame):
         help_window = tk.Toplevel(self)
         help_window.wm_title("Help")
 
+        how_to_use = tk.Label(help_window, text="How to use")
+        how_to_use.pack()
+        how_to_use_text = ("This application was designed to increase YouTube exposure "
+        + "for the Black Lives Matter movement.\n"
+        + "In order to use this application to its greatest potential, please "
+        + "follow the instructions below: \n"
+        + "1: Input your Google username and password into the specified fields.*\n\n"
+        + "2: Input tags to increase exposure \n"
+        + "   - Press 'Add tags to search!' and then type a tag into the field.\n"
+        + "     Once you have types a tag into the field, press 'Submit new tag'.\n"
+        + "     You can enter several tags by repeating this process.\n\n"
+        + "3: Add comments to tagged videos \n"
+        + "   - Press 'Add comment' and enter your comment into the field in the pop-up. \n"
+        + "   - Press 'Submit new comment' and ensure that the new comment is appended to \n"
+        + "     the main window. \n"
+        + "     You can enter several comments by repeating this process \n\n"
+        + "4: Start the bot \n"
+        + "   - In order to start the bot, simply press 'Click to run'.")
+        how_to_use_section = tk.Text(help_window, state='normal', height=5)
+        how_to_use_section.pack()
+        how_to_use_section.insert(tk.INSERT, how_to_use_text)
+        how_to_use_section.configure(state='disabled')
+
+        help = tk.Label(help_window, text="Other help")
+        help.pack()
+        help_text = ("This application was written within a day by a horrible amateur, and "
+        + "thus is riddled with mistakes and bugs. If you have any problems with this "
+        + "application, please feel free to contact me through my github: \n"
+        + "https://github.com/jackie-s-dev/blm_bot \n\n"
+        + "In order to aid in the debug process, please send the 'logs.txt' file "
+        + "associated with your session. Please note that the 'logs.txt.' file is "
+        + "overwritten each time a new session has begun.\n\n"
+        + "You can copy and paste the 'logs.txt' file by pressing the button below.")
+        help_text_section = tk.Text(help_window, state='normal', height=5)
+        help_text_section.pack()
+        help_text_section.insert(tk.INSERT, help_text)
+        help_text_section.configure(state='disabled')
+
+        copy_log = tk.Button(help_window, command=self.copy_logs)
+        copy_log['text'] = "Copy logs to clipboard."
+        copy_log.pack()
+
+    def copy_logs(self):
+        """
+        Responsible for copying the contents of the logs.txt file
+        into the users clipboard.
+        """
+        log_file = open("logs.txt", "r")
+        copy_text = ""
+        for line in log_file:
+            copy_text = copy_text + line
+
+        pyperclip.copy(copy_text)
+
     def start_bot(self):
         """
         Begins the bot based on pre-defined rules.
@@ -71,17 +126,13 @@ class Application(tk.Frame):
         bot.login(username, password)
         bot.run(500)
 
-        self.bot_button = tk.Button(self, command=self.stop_bot)
-        self.bot_button['text'] = "Stop"
-        self.bot_button.pack()
-
     def add_tags(self):
         """
         Creates windows for adding tags.
         """
         self.tag_window = tk.Toplevel(self)
         self.tag_window.wm_title("Add tags.")
-        self.tag_text = tk.Text(self.tag_window, height=5, width=10)
+        self.tag_text = tk.Text(self.tag_window, height=2, width=25)
         self.tag_text.pack()
 
         tag_button = tk.Button(self.tag_window, command=self.new_tag)
@@ -105,7 +156,7 @@ class Application(tk.Frame):
         """
         self.comment_window = tk.Toplevel(self)
         self.comment_window.wm_title("Add comments!")
-        self.comment_text = tk.Text(self.comment_window, height=5, width=10)
+        self.comment_text = tk.Text(self.comment_window, height=3, width=25)
         self.comment_text.pack()
 
         comment_button = tk.Button(self.comment_window, command=self.new_comment)
@@ -132,5 +183,6 @@ class Application(tk.Frame):
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("BLACK LIVES MATTER")
+    root.iconphoto(True, tk.PhotoImage(file='imgs/fist.png'))
     app = Application(master=root)
     app.mainloop()

@@ -1,0 +1,5 @@
+2020/06/06-21:59:05.497 3f3e Reusing MANIFEST /home/jackie/Documents/Dev/BLM_Bot/selenium/Default/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb/MANIFEST-000001
+2020/06/06-21:59:37.409 4015 Level-0 table #5: started
+2020/06/06-21:59:37.887 4015 Level-0 table #5: 2803 bytes OK
+2020/06/06-21:59:38.038 4015 Delete type=0 #3
+2020/06/06-21:59:38.038 4015 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

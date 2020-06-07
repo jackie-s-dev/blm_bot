@@ -1,8 +1,12 @@
-from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
 import time
 import random
 from logger import Logger
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
 
 # constants that this bot relies on
 ADD_COMMENT_XPATH = '//*[@id="labelAndInputContainer"]'
@@ -113,21 +117,48 @@ class Bot():
         self.logger.log("Adding comment...")
         if (comment == True):
             try:
-                rand_index = random.randint(0, len(self.comments))
-                new_comment = self.comments[rand_index - 1]
-                self.find_element(ADD_COMMENT_CSS).send_keys(new_comment)
-                time.sleep(3)
-                self.find_element(SUBMIT_COMMENT_CSS).click()
-                time.sleep(3)
-            except:
+                self.add_comment()
+                time.sleep(2)
+            except Exception as e:
                 self.logger.log("Failed to add comment.", failure=True)
+                self.logger.log(str(e), failure=True)
+                print(e)
 
         # check if the video is still playing
         self.logger.log("Checking current video duration...")
         video_duration = self.find_element(YT_TIME_TOTAL_CSS).text
         time.sleep(self.time_to_wait(video_duration))
 
+        self.logger.log("Navigating back to the YouTube mainpage.")
+        self.driver.get("https://youtube.com")
+
         return True
+
+    def add_comment(self):
+        self.logger.log("Selecting comment...")
+        comment = self.comments[random.randint(0, len(self.comments)) -1]
+
+        self.logger.log("Scrolling towards comments...")
+        self.driver.execute_script("window.scrollTo(0, 500);")
+
+        self.logger.log("Waiting for comment box...")
+        WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((By.ID, "placeholder-area")))
+
+        self.logger.log("Activating box for commenting...")
+        self.driver.find_element_by_xpath("//*[@id=\"placeholder-area\"]").click()
+
+        self.logger.log("Sending comment and posting...")
+        self.driver.implicitly_wait(5)
+        self.driver.find_element_by_xpath("/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/ytd-comments/ytd-item-section-renderer/div[1]/ytd-comments-header-renderer/div[5]/ytd-comment-simplebox-renderer/div[3]/ytd-comment-dialog-renderer/ytd-commentbox/div/div[2]/paper-input-container/div[2]/div/div[1]/ytd-emoji-input/yt-user-mention-autosuggest-input/yt-formatted-string/div").send_keys(comment)
+        self.driver.find_element_by_xpath("/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/ytd-comments/ytd-item-section-renderer/div[1]/ytd-comments-header-renderer/div[5]/ytd-comment-simplebox-renderer/div[3]/ytd-comment-dialog-renderer/ytd-commentbox/div/div[2]/paper-input-container/div[2]/div/div[1]/ytd-emoji-input/yt-user-mention-autosuggest-input/yt-formatted-string/div").send_keys(Keys.ENTER + Keys.ENTER)
+
+        self.logger.log("Waiting to click/send post...")
+        post = WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((By.XPATH, '/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/ytd-comments/ytd-item-section-renderer/div[1]/ytd-comments-header-renderer/div[5]/ytd-comment-simplebox-renderer/div[3]/ytd-comment-dialog-renderer/ytd-commentbox/div/div[4]/div[5]/ytd-button-renderer[2]')))
+        post.click()
+
+        # Lets wait a bit
+        self.logger.log("Successfully commented. Waiting...")
+        time.sleep(3)
 
     def time_to_wait(self, time_string):
         """
@@ -179,7 +210,6 @@ class Bot():
         """
         Runs until the specified video limit
         """
-
         counter = 0
         while(counter < limit):
             counter = counter + 3
@@ -193,7 +223,3 @@ class Bot():
         self.logger.log("BOT WATCHING SESSION COMPLETE.")
         self.logger.log("===Closing===")
         self.logger.stop_close()
-
-bot = Bot(['heelloo', 'hi'], ['turtle', 'people', 'cars', 'bees'], 'https://www.youtube.com/watch?v=5h6oGxHVZW0')
-bot.login('chompyjackie@gmail.com', 'B0ssJackie')
-bot.run(1)
