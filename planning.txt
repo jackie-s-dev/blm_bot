@@ -1,0 +1,18 @@
+BLM_Bot
+
+To be written in Python
+
+The bot will add views to a YouTube video which will donate to Black Lives Matter.
+The bot, after viewing the video, will find 4 random videos and comment messages
+promoting BLM to help the algorithm with discovery. The bot will run indefinitely
+until the user tells it to stop.
+
+There should be a simple GUI so that any person can allow their accounts to be
+used to promote BLM.
+
+LAYOUT
+[] Pop-up GUI
+  [] YouTube username/password
+  [] Preferred tags [the bot will add comments to videos related to these tags.
+     if there are no tags, the bot will not add to random videos]
+  [] Run/Stop
