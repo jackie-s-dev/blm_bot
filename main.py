@@ -183,6 +183,9 @@ class Application(tk.Frame):
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("BLACK LIVES MATTER")
-    root.iconphoto(True, tk.PhotoImage(file='imgs/fist.png'))
+    try:
+        root.iconphoto(True, tk.PhotoImage(file='./imgs/fist.png'))
+    except:
+        print("Could not load photo.")
     app = Application(master=root)
     app.mainloop()
