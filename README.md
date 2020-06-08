@@ -1,9 +1,9 @@
 # BLACK LIVES MATTER
 
 ## How does it work?
-This bot is intended to add views to a YouTube video that will fund various Black Lives Matter causes. The bot will not only watch the charity video, but it will also view and comment on other videos to promote the algorithm and spread awareness completely hands free.
+This bot is intended to add views to a YouTube video that will fund Black Lives Matter causes. The bot will not only watch the specified charity video, but it will also view and comment on other videos to promote the algorithm and spread awareness completely hands free.
 
-This bot uses your Google account to add comments and interact with the browser. You will be able to see what the bot is doing as it will open up a browser automatically. [Please do not interact with the browser that will open up as it might disturb the programs terrible senses]
+This bot uses your Google account to add comments and interact with the browser. You will be able to see what the bot is doing after the blm_bot opens your browser automatically. [Please do not interact with the browser that will open up as it might disturb the programs terrible senses]
 
 As the user of this program, you have direct control over the tags that the bot uses to search for as well as the comments which the bot places on other videos. The comments may be simple or directly promoting the BLM movement-- it's in your hands.
 
@@ -25,3 +25,7 @@ Please note that this program has not been tested on all platforms and has sever
   - When you are ready to go, press "Run the bot". You should see a Chrome browser open up. It will navigate to StackOverFlow to sign in to google and then it will navigate to YouTube to do its business.
   - The bot will run [virtually] indefinitely. I did not add any 'stop' feature to this application, so when you decide to stop the bot, you can just forcefully 'x' out of the GUI.
   - Verify that the bot has completed its duties by viewing your YouTube history.
+
+### 4. Questions?
+  - This application is bound to have issues. Please feel free to add to this GitHub page any errors that you come across.
+  - Assuming that your application does not have bugs preventing you from accessing the log files, please navigate to the 'Help/View Information' window in the GUI and then click "Copy logs to clipboard." When submitting an error message, please supply this log message as it may help in debugging. 
