@@ -16,3 +16,12 @@ LAYOUT
   [] Preferred tags [the bot will add comments to videos related to these tags.
      if there are no tags, the bot will not add to random videos]
   [] Run/Stop
+
+Dependencies:
+  - Python 3.6+
+  - Selenium
+  - pyperclip
+  - tkinter
+  - pyinstaller
+FOR WINDOWS:
+  - webdriver-manager 
